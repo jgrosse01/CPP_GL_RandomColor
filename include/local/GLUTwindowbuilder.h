@@ -5,7 +5,9 @@
 #ifndef GLUTwindowbuilder_h
 #define GLUTwindowbuilder_h
 
+int *random_color();
 void init();
 void display();
+
 
 #endif //GLUTwindowbuilder_h

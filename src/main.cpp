@@ -11,28 +11,28 @@
 
 int main(int argc, char** argv)
 {
-    //Initialise GLUT with command-line parameters.
+    // the demo did it this way and i don't know what to pass in so default args we go!
     glutInit(&argc, argv);
 
-    //Set Display Mode
+    // single display in RGB color
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 
-    //Set the window size
-    glutInitWindowSize(250,250);
+    // Set the window size
+    glutInitWindowSize(300,300);
 
-    //Set the window position
-    glutInitWindowPosition(100,100);
+    // Set the window position on screen
+    glutInitWindowPosition(250,250);
 
-    //Create the window
-    glutCreateWindow("A Simple OpenGL Windows Application with GLUT");
+    // Create the window
+    glutCreateWindow("Random Color Noise!");
 
-    //Call init (initialise GLUT
+    // init method in GLUTwindowbuilder.cpp
     init();
 
-    //Call "display" function
+    // sets the display function to use
     glutDisplayFunc(display);
 
-    //Enter the GLUT event loop
+    // window loop, basically just magic :)
     glutMainLoop();
 
     return 0;
