@@ -13,13 +13,13 @@ static random_device g_planter;
 static ranlux24 g_gen(g_planter());
 
 
-int *random_color() {
+float *random_color() {
     // random color array
-    static int c[3];
+    static float c[3];
     // value distribution
-    uniform_int_distribution<int> dist(0,255);
+    uniform_real_distribution<float> dist(0.0,1.0);
     // get color array randomly generated
-    for (int & i : c) {
+    for (float & i : c) {
         i = dist(g_gen);
     }
 
@@ -51,7 +51,7 @@ void display()
         //cout << "got X pixel";
         for (int j = 0; j < glutGet(GLUT_WINDOW_HEIGHT); j++) {
             //cout <<"got Y pixel";
-            int *color;
+            float *color;
             color = random_color();
 
             // verification that colors generated are not just black
@@ -60,7 +60,7 @@ void display()
             //cout << color[2] << endl;
 
             //cout << "Got random color array";
-            glColor3f(color[0]/255.0, color[1]/255.0, color[2]/255.0);
+            glColor3f(color[0], color[1], color[2]);
 
             //cout << "selected color";
             glVertex2f(i, j);
