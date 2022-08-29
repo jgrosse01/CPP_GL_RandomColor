@@ -38,11 +38,11 @@ void save_ppm() {
     // create new file
     std::ofstream img("saved_files/randomColorNoise.ppm");
     // write header line
-    img << "P3 " << sizeof(g_image) << " " << sizeof(g_image[0]) << " 255" << std::endl;
+    img << "P3 " << 300 << " " << 300 << " 255" << std::endl;
     // iterative loops to save RGB color info to ppm
-    for (auto & i : g_image) {
-        for (auto & j : i) {
-            img << j[0] << " " << j[1] << " " << j[2] << std::endl;
+    for (int i = 0; i < 300; i++) {
+        for (int j = 0; j < 300; j++) {
+            img << g_image[i][j][0] << " " << g_image[i][j][1] << " " << g_image[i][j][2] << std::endl;
         }
     }
     img.close();
