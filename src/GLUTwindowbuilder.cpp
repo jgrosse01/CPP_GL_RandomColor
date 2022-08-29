@@ -3,78 +3,61 @@
 //
 
 #include <random>
-//#include <iostream>
 #include <GL/freeglut.h>
 
-using namespace std;
-
 // set seed and initialize rng as global vars
-// used for random_color() method
-static random_device g_planter;
-static ranlux24 g_gen(g_planter());
+static std::random_device g_planter;
+static std::ranlux24 g_gen(g_planter());
 
+// rgb array buffer to store random noise image
+int g_image[300][300][3];
 
-int *random_color() {
-    // random color array
-    static int c[3];
+/**
+ * Generate noise from random seed and store in g_image.
+ */
+void generate_noise_image() {
     // value distribution
-    uniform_int_distribution<int> dist(0,255);
+    std::uniform_int_distribution<int> dist(0,255);
     // get color array randomly generated
-    for (int & i : c) {
-        i = dist(g_gen);
+    for (auto & i : g_image) {
+        for (auto & j : i) {
+            for (int & k : j) {
+                k = dist(g_gen);
+            }
+        }
     }
-
-    return c;
 }
 
-void init()
-{
-    //select clearing (background) color
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-
-    //initialize viewing values
+/**
+ * Initialize OpenGL Glut window.
+ */
+void init() {
+    // load random noise into memory buffer
+    generate_noise_image();
+    //initialize window default values
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0,glutGet(GLUT_WINDOW_WIDTH),0,glutGet(GLUT_WINDOW_HEIGHT),-1,1);
 
 }
 
-void display()
-{
+/**
+ * Puts image on screen, loaded from memory buffer stored as g_image.
+ */
+void display() {
     //Clear all pixels
     glClear(GL_COLOR_BUFFER_BIT);
-    glPointSize(1.0f);
     glBegin(GL_POINTS);
 
-    //cout << "GL has Begun";
-
-    for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++) {
-        //cout << "got X pixel";
-        for (int j = 0; j < glutGet(GLUT_WINDOW_HEIGHT); j++) {
-            //cout <<"got Y pixel";
-            int *color;
-            color = random_color();
-
-            // verification that colors generated are not just black
-            //cout << color[0] << endl;
-            //cout << color[1] << endl;
-            //cout << color[2] << endl;
-
-            //cout << "Got random color array";
-            glColor3ub(color[0], color[1], color[2]);
-
-            //cout << "selected color";
-            glVertex2f(i, j);
-
-
-
-            //cout << "painted pixel";
+    // load image from memory buffer to paint on screen
+    for (int i = 0; i < 300; ++i) {
+        for (int j = 0; j < 300; ++j) {
+            glColor3ub(g_image[i][j][0], g_image[i][j][1], g_image[i][j][2]);
+            glVertex2i(i,j);
         }
     }
 
     glEnd();
-
-    // Don't wait start processing buffered OpenGL routines
     glFlush();
 }
 
