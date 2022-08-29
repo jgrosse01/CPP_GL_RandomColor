@@ -5,7 +5,10 @@
 #ifndef GLUTwindowbuilder_h
 #define GLUTwindowbuilder_h
 
-int *random_color();
+
+
+void generate_noise_image();
+void save_ppm();
 void init();
 void display();
 
