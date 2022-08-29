@@ -3,7 +3,7 @@
 //
 
 #include <random>
-#include <iostream>
+//#include <iostream>
 #include <GL/freeglut.h>
 
 using namespace std;
@@ -34,7 +34,7 @@ void init()
     //initialize viewing values
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+    glOrtho(0,glutGet(GLUT_WINDOW_WIDTH),0,glutGet(GLUT_WINDOW_HEIGHT),-1,1);
 
 }
 
@@ -45,9 +45,7 @@ void display()
     glPointSize(1.0f);
     glBegin(GL_POINTS);
 
-    cout << "GL has Begun";
-
-
+    //cout << "GL has Begun";
 
     for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++) {
         //cout << "got X pixel";
@@ -62,10 +60,12 @@ void display()
             //cout << color[2] << endl;
 
             //cout << "Got random color array";
-            glColor3i(color[0], color[1], color[2]);
+            glColor3f(color[0]/255.0, color[1]/255.0, color[2]/255.0);
 
             //cout << "selected color";
-            glVertex2i(i, j);
+            glVertex2f(i, j);
+
+
 
             //cout << "painted pixel";
         }
