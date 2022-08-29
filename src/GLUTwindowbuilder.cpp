@@ -9,17 +9,18 @@
 using namespace std;
 
 // set seed and initialize rng as global vars
+// used for random_color() method
 static random_device g_planter;
 static ranlux24 g_gen(g_planter());
 
 
-float *random_color() {
+int *random_color() {
     // random color array
-    static float c[3];
+    static int c[3];
     // value distribution
-    uniform_real_distribution<float> dist(0.0,1.0);
+    uniform_int_distribution<int> dist(0,255);
     // get color array randomly generated
-    for (float & i : c) {
+    for (int & i : c) {
         i = dist(g_gen);
     }
 
@@ -51,7 +52,7 @@ void display()
         //cout << "got X pixel";
         for (int j = 0; j < glutGet(GLUT_WINDOW_HEIGHT); j++) {
             //cout <<"got Y pixel";
-            float *color;
+            int *color;
             color = random_color();
 
             // verification that colors generated are not just black
@@ -60,7 +61,7 @@ void display()
             //cout << color[2] << endl;
 
             //cout << "Got random color array";
-            glColor3f(color[0], color[1], color[2]);
+            glColor3ub(color[0], color[1], color[2]);
 
             //cout << "selected color";
             glVertex2f(i, j);
