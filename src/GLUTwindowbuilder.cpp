@@ -34,14 +34,14 @@ void generate_noise_image() {
  * Save File to PPM file
  * @param Image The 3D array of colors to be passed in for saving.
  */
-void save_ppm() {
+void save_ppm(int width, int height, int max_color_val = 255) {
     // create new file
     std::ofstream img("saved_files/randomColorNoise.ppm");
     // write header line
-    img << "P3 " << 300 << " " << 300 << " 255" << std::endl;
+    img << "P3 " << width << " " << height << " " << max_color_val << std::endl;
     // iterative loops to save RGB color info to ppm
-    for (int i = 0; i < 300; i++) {
-        for (int j = 0; j < 300; j++) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
             img << g_image[i][j][0] << " " << g_image[i][j][1] << " " << g_image[i][j][2] << std::endl;
         }
     }
@@ -55,12 +55,11 @@ void init() {
     // load random noise into memory buffer
     generate_noise_image();
     //save image file as ppm
-    save_ppm();
+    save_ppm(300,300);
     //initialize window default values
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0,glutGet(GLUT_WINDOW_WIDTH),0,glutGet(GLUT_WINDOW_HEIGHT),-1,1);
-
 }
 
 /**

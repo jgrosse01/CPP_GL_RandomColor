@@ -8,7 +8,7 @@
 
 
 void generate_noise_image();
-void save_ppm();
+void save_ppm(int width, int height, int max_color_value);
 void init();
 void display();
 
